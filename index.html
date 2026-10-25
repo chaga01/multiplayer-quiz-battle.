@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Quiz Battle — Multiplayer Trivia</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="bg-orb orb-one"></div><div class="bg-orb orb-two"></div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Quiz Battle home"><span class="brand-mark">⚡</span> QUIZ<span class="brand-light">BATTLE</span></a>
+      <div class="live-pill"><span class="live-dot"></span> REAL-TIME MULTIPLAYER</div>
+    </header>
+
+    <section id="homeScreen" class="hero panel">
+      <div class="eyebrow">THINK FAST. SCORE BIG.</div>
+      <h1>Friendly rivalry.<br><span class="gradient-text">Fierce trivia.</span></h1>
+      <p class="subtitle">Challenge your friends from anywhere. One room, eight questions, one champion.</p>
+      <div class="form-grid">
+        <label class="field full">YOUR PLAYER NAME
+          <input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="e.g. TriviaTiger">
+        </label>
+        <button id="createBtn" class="btn btn-primary full">＋ Create a room</button>
+        <div class="divider full"><span>OR JOIN YOUR FRIENDS</span></div>
+        <label class="field">ROOM CODE
+          <input id="codeInput" maxlength="5" placeholder="ABCDE" autocapitalize="characters">
+        </label>
+        <button id="joinBtn" class="btn btn-secondary">Join room →</button>
+      </div>
+      <div id="homeError" class="error" role="alert"></div>
+      <div class="feature-row">
+        <div><span>👥</span><b>2–12 players</b></div>
+        <div><span>⏱️</span><b>15 sec per question</b></div>
+        <div><span>🏆</span><b>Live leaderboard</b></div>
+      </div>
+    </section>
+
+    <section id="lobbyScreen" class="panel hidden">
+      <div class="section-top"><div><div class="eyebrow">ROOM LOBBY</div><h2>Get your crew together</h2></div><div class="room-badge">CODE <strong id="roomCode">-----</strong></div></div>
+      <p class="muted">Share this code with friends. They can join from any device using this website.</p>
+      <div class="lobby-layout">
+        <div class="player-card"><div class="card-heading">PLAYERS <span id="playerCount">0 / 12</span></div><ul id="lobbyPlayers" class="player-list"></ul></div>
+        <div class="rules-card"><div class="card-heading">HOW TO PLAY</div><ul class="rules-list"><li>8 randomly selected questions</li><li>15 seconds to answer each question</li><li>Correct answers earn 500–1,000 points</li><li>Faster answers earn more points</li><li>Highest score at the end wins</li></ul><button id="startBtn" class="btn btn-primary full">Start match →</button><p id="hostHint" class="tiny muted">Waiting for the host to start…</p></div>
+      </div>
+      <div id="lobbyError" class="error" role="alert"></div>
+      <button id="leaveLobbyBtn" class="text-btn">← Leave room</button>
+    </section>
+
+    <section id="gameScreen" class="panel hidden">
+      <div class="game-top"><div class="eyebrow" id="categoryLabel">TRIVIA ROUND</div><div class="round-label">QUESTION <strong id="questionNum">1</strong><span id="totalQuestions"> / 8</span></div></div>
+      <div class="timer-wrap"><div id="timerBar" class="timer-bar"></div></div>
+      <div class="question-area"><h2 id="questionText">Loading question…</h2><div id="answerGrid" class="answer-grid"></div><div id="answerStatus" class="answer-status" aria-live="polite"></div></div>
+      <aside class="game-sidebar"><div class="card-heading">LIVE SCORES</div><ul id="gamePlayers" class="player-list"></ul></aside>
+      <div id="resultBanner" class="result-banner hidden"></div>
+    </section>
+
+    <section id="finishScreen" class="panel hidden">
+      <div class="finish-icon">🏆</div><div class="eyebrow">MATCH COMPLETE</div><h1 id="winnerTitle">You're a champion!</h1><p class="subtitle">Here's how the final scores stacked up.</p>
+      <div id="finalScores" class="final-scores"></div>
+      <button id="playAgainBtn" class="btn btn-primary">Play another match ↗</button>
+    </section>
+
+    <footer><span>QUIZ BATTLE</span><span>Good games. Great friends.</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
